@@ -1,0 +1,22 @@
+{
+  "name": "@tobius/viewport.fun",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tobius/viewport.fun.git"
+  },
+  "author": "Toby Miller <tobius@tobius.co>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tobius/viewport.fun/issues"
+  },
+  "homepage": "https://github.com/tobius/viewport.fun#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
