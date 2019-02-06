@@ -1,146 +1,152 @@
 <!DOCTYPE html>
 <html lang="en-US">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>viewport fun</title>
-		<style type="text/css">
-			body, html {
-				margin: 0;
-				padding: 0;
-				font-family: sans-serif;
-				text-align: center;
-				height: 100%;
-			}
-			div#parent {
-				display: table;
-				width: 100%;
-				height: 100%;
-				background-color: #fff;
-			}
-			div#parent.ready {
-				transition: background-color 0.5s ease-in-out;
-			}
-			div#child {
-				display: table-cell;
-				vertical-align: middle;
-			}
-			p {
-				font-size: 1.2em;
-			}
-			span {
-				font-weight: bold;
-			}
-			sup {
-				opacity: 0.5;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="parent" data-color="#fff">
-			<div id="child">
-				<p><strong>viewport.fun</strong></p>
-				<p><span id="w"></span><small>px</small><sup>w</sup> x <span id="h"></span><small>px</small><sup>h</sup></p>
-				<p><small><em>(resize me)</em></small></p>
-			</div>
-		</div>
-		<script type="text/javascript">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>viewport fun</title>
+    <style type="text/css">
+      body, html {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        text-align: center;
+        height: 100%;
+      }
+      div#parent {
+        display: table;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+      }
+      div#parent.ready {
+        transition: background-color 0.5s ease-in-out;
+      }
+      div#child {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      p {
+        font-size: 1.2em;
+      }
+      span {
+        font-weight: bold;
+      }
+      sup {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="parent" data-color="#fff">
+      <div id="child">
+        <p><strong>viewport.fun</strong></p>
+        <p>
+        <span id="w"></span><small>px</small><sup>w</sup> x
+        <span id="h"></span><small>px</small><sup>h</sup> @
+        <span id="dpr"></span><sup>x</sup></p>
+        <p><small><em>(resize me)</em></small></p>
+      </div>
+    </div>
+    <script type="text/javascript">
 
-			/**
-			 * reusable timeout instance
-			 * @var {Timeout}
-			 */
-			var timeout = false;
+      /**
+       * reusable timeout instance
+       * @var {Timeout}
+       */
+      var timeout = false;
 
-			/**
-			 * delay between debounce attempts (ms)
-			 * @var {Integer}
-			 */
-			var delay = 250;
+      /**
+       * delay between debounce attempts (ms)
+       * @var {Integer}
+       */
+      var delay = 250;
 
-			/**
-			 * measure the current viewport dimensions
-			 *
-			 * @param {Void}
-			 * @return {Object}
-			 */
-			function measure() {
-				return {
-					w: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-					h: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-				};
-			}
+      /**
+       * measure the current viewport dimensions
+       *
+       * @param {Void}
+       * @return {Object}
+       */
+      function measure() {
+        return {
+          w: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+          h: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+          dpr: window.devicePixelRatio || 1
+        };
+      }
 
-			/**
-			 * rotate the background color
-			 *
-			 * note: a random color is selected on the first use
-			 *
-			 * @param {Void}
-			 * @return {Void}
-			 */
-			function rotate() {
-				var colors = ['#f39c12', '#3498db', '#2ecc71', '#f1c40f', '#ec7063', '#bdc3c7'];
-				var parent = document.getElementById('parent');
-				var next = 0;
-				if (parent.dataset.color === '#fff') {
-					next = Math.floor(Math.random() * Math.floor(colors.length - 1));
-				} else {
-					var current = 0;
-					for (var i in colors) {
-						if (parent.dataset.color === colors[i]) {
-							current = parseInt(i);
-						}
-					}
-					next = current === (colors.length -1) ? 0 : current + 1;
-				}
-				parent.dataset.color = colors[next];
-				parent.style.backgroundColor = colors[next];
-				if (parent.className.split(' ').indexOf('ready') === -1) {
-					setTimeout(function() {
-						parent.classList.add('ready');
-					}, delay);
-				}
-			}
+      /**
+       * rotate the background color
+       *
+       * note: a random color is selected on the first use
+       *
+       * @param {Void}
+       * @return {Void}
+       */
+      function rotate() {
+        var colors = ['#f39c12', '#3498db', '#2ecc71', '#f1c40f', '#ec7063', '#bdc3c7'];
+        var parent = document.getElementById('parent');
+        var next = 0;
+        if (parent.dataset.color === '#fff') {
+          next = Math.floor(Math.random() * Math.floor(colors.length - 1));
+        } else {
+          var current = 0;
+          for (var i in colors) {
+            if (parent.dataset.color === colors[i]) {
+              current = parseInt(i);
+            }
+          }
+          next = current === (colors.length -1) ? 0 : current + 1;
+        }
+        parent.dataset.color = colors[next];
+        parent.style.backgroundColor = colors[next];
+        if (parent.className.split(' ').indexOf('ready') === -1) {
+          setTimeout(function() {
+            parent.classList.add('ready');
+          }, delay);
+        }
+      }
 
-			/**
-			 * update the UI
-			 *
-			 * @param {Void}
-			 * @return {Void}
-			 */
-			function update() {
+      /**
+       * update the UI
+       *
+       * @param {Void}
+       * @return {Void}
+       */
+      function update() {
 
-				// get the measurements
-				var obj = measure();
+        // get the measurements
+        var obj = measure();
 
-				// update the viewport display
-				var w = document.getElementById('w');
-				var h = document.getElementById('h');
-				w.innerHTML = obj.w;
-				h.innerHTML = obj.h;
+        // update the viewport display
+        var w = document.getElementById('w');
+        var h = document.getElementById('h');
+        var dpr = document.getElementById('dpr');
+        w.innerHTML = obj.w;
+        h.innerHTML = obj.h;
+                dpr.innerHTML = obj.dpr;
 
-				// update the background color (to highlight a state change)
-				rotate();
-			}
+        // update the background color (to highlight a state change)
+        rotate();
+      }
 
-			/**
-			 * debounce the UI update
-			 *
-			 * @param {Void}
-			 * @return {Void}
-			 */
-			function debounce() {
-				clearTimeout(timeout);
-				timeout = setTimeout(update, delay);
-			}
+      /**
+       * debounce the UI update
+       *
+       * @param {Void}
+       * @return {Void}
+       */
+      function debounce() {
+        clearTimeout(timeout);
+        timeout = setTimeout(update, delay);
+      }
 
-			// measure on domready
-			document.addEventListener('DOMContentLoaded', update);
+      // measure on domready
+      document.addEventListener('DOMContentLoaded', update);
 
-			// measure on resize
-			window.addEventListener('resize', debounce);
+      // measure on resize
+      window.addEventListener('resize', debounce);
 
-		</script>
-	</body>
+    </script>
+  </body>
 </html>
