@@ -3,7 +3,7 @@
 
 [http://viewport.fun ](http://viewport.fun)
 
-A tiny SPA that prints your viewport's width, height, and dpr.
+A tiny native SPA that prints your viewport's width, height, and dpr.
 
 <img src="screenshot.png"/>
 

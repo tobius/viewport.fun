@@ -25,6 +25,20 @@
         display: table-cell;
         vertical-align: middle;
       }
+      div#source {
+        bottom: 2em;
+        left: 0;
+        position: absolute;
+        right: 0;
+        text-align: center;
+      }
+      div#source a {
+        color: #363636;
+        text-decoration: none;
+      }
+      div#source a:hover {
+        text-decoration: underline;
+      }
       p {
         font-size: 1.2em;
       }
@@ -38,6 +52,9 @@
   </head>
   <body>
     <div id="parent" data-color="#fff">
+      <div id="source">
+        <a href="https://github.com/tobius/viewport.fun/">source code</a>
+      </div>
       <div id="child">
         <p><strong>viewport.fun</strong></p>
         <p>
